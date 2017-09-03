@@ -77,11 +77,11 @@ bindkey "^X\\x7f" backward-kill-line
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='vim'
- fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='vim'
+# fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -99,5 +99,12 @@ alias ohmyzsh="mate ~/.oh-my-zsh"
 alias easyexercism='python3 ~/Documents/Repositories/EasyExercism/EasyExercism.py'
 alias fucklaunchpad='sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps; Dlias fucklaunchpad='sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps; DELETE from groups WHERE title<>''; DELETE from items WHERE rowid>2;"; Killall Dock'ELETE from groups WHERE title<>''; DELETE from items WHERE rowid>2;"; Killall Dock'
 
+export PATH="$PATH:$HOME/.scripts"
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+{ archey -b; fortune -s; } | lolcat -a -d 1 -s 50 -t
+
+
+

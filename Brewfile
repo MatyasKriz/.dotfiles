@@ -3,6 +3,8 @@ cask_args appdir: '/Applications'
 tap 'homebrew/bundle'
 tap 'caskroom/cask'
 
+brew 'zsh'
+brew 'zsh-completions'
 brew 'ack'
 brew 'coreutils'
 brew 'go'
@@ -15,6 +17,11 @@ brew 'youtube-dl'
 brew 'magic-wormhole'
 brew 'watchman'
 brew 'tesseract'
+brew 'tree'
+brew 'rbenv'
+brew 'ruby-build'
+brew 'rbenv-default-gems'
+
 
 cask '1password'
 cask 'adium'
@@ -26,12 +33,24 @@ cask 'mapbox-studio'
 cask 'seashore'
 cask 'slack'
 cask 'transmission'
-cask 'tunnelbear'
 cask 'vlc'
+cask 'qlcolorcode'
+cask 'qlstephen'
+cask 'qlmarkdown'
+cask 'qlimagesize'
+cask 'flux'
+cask 'appcleaner'
+cask 'superduper'
+cask 'cheatsheet'
+cask 'spectacle'
+
 
 
 # silly stuff
 
 brew 'myman'
 brew 'sl'
+brew 'cowsay'
+brew 'fortune'
+brew 'archey'
 
