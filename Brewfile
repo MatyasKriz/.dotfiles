@@ -43,7 +43,8 @@ cask 'appcleaner'
 cask 'superduper'
 cask 'cheatsheet'
 cask 'spectacle'
-
+cask 'iterm2'
+cask 'slack'
 
 
 # silly stuff
