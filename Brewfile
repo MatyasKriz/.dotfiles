@@ -21,6 +21,7 @@ brew 'tree'
 brew 'rbenv'
 brew 'ruby-build'
 brew 'rbenv-default-gems'
+brew 'fd'
 
 
 cask '1password'
@@ -45,6 +46,10 @@ cask 'cheatsheet'
 cask 'spectacle'
 cask 'iterm2'
 cask 'slack'
+cask 'karabiner'
+cask 'virtualbox'
+cask 'colorpicker'
+cask 'colorpicker-skalacolor'
 
 
 # silly stuff
