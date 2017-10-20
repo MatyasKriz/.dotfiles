@@ -19,9 +19,6 @@ sudo nvram SystemAudioVolume=" "
 
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-# Hide Scrollbars when possible
-defaults write -g AppleShowScrollBars -string "WhenScrolling"
-
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
