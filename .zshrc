@@ -97,12 +97,21 @@ alias zshconfig="$EDITOR ~/.zshrc"
 alias zshreload="source ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias easyexercism='python3 ~/Documents/Repositories/EasyExercism/EasyExercism.py'
-alias fucklaunchpad='sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps; Dlias fucklaunchpad='sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps; DELETE from groups WHERE title<>''; DELETE from items WHERE rowid>2;"; Killall Dock'ELETE from groups WHERE title<>''; DELETE from items WHERE rowid>2;"; Killall Dock'
 
 export PATH="$PATH:$HOME/.scripts"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# Autocompletion: line # -- what it enables
+# # 0 -- vanilla completion (abc => abc)
+# # 1 -- smart case completion (abc => Abc)
+# # 2 -- word flex completion (abc => A-big-Car)
+# # 3 -- full flex completion (abc => ABraCadabra)
+zstyle ':completion:*' matcher-list '' \
+   'm:{a-z\-}={A-Z\_}' \
+     'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+       'r:|?=** m:{a-z\-}={A-Z\_}'
 
 { archey -b; fortune -s; } | lolcat -a -d 1 -s 50 -t
 
