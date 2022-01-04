@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -7,7 +14,12 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+~/.SourceCodePro+Powerline+Awesome+Regular-Configuration.sh
+# POWERLEVEL9K_MODE='awesome-fontconfig'
+ZSH_THEME="powerlevel10k/powerlevel10k"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time virtualenv)
+POWERLEVEL9K_STATUS_VERBOSE=false
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -50,22 +62,31 @@ ZSH_THEME="agnoster"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd osx sudo web-search)
+plugins=(
+    git
+    wd
+    macos
+    sudo
+    web-search
+    virtualenv
+    docker
+    docker-compose
+    zsh-autosuggestions
+    asdf
+    bundler
+    colored-man-pages
+    command-not-found
+    common-aliases
+    # Ctrl+O copies the currently typed command.
+    copybuffer
+    emoji-clock
+    encode64
+    gem
+    magic-enter
+    safe-paste
+)
 
 source $ZSH/oh-my-zsh.sh
-eval $(thefuck --alias)
-
-if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
-  . ~/.config/exercism/exercism_completion.zsh
-fi
-
-export USER=Sparkesix
-DEFAULT_USER=Sparkesix
-prompt_context() {
-  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-      prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
-  fi
-}
 
 # User configuration
 bindkey "^X^_" redo
@@ -77,11 +98,16 @@ bindkey "^X\\x7f" backward-kill-line
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='vim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
+
+export PAGER='less'
+
+export BAT_THEME='OneHalfDark'
+export BAT_PAGER='less -RSXF'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -96,24 +122,58 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 alias zshconfig="$EDITOR ~/.zshrc"
 alias zshreload="source ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
-alias easyexercism='python3 ~/Documents/Repositories/EasyExercism/EasyExercism.py'
+alias vimconfig="$EDITOR ~/.vim/vimrc"
 
 export PATH="$PATH:$HOME/.scripts"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+source ~/.aliases
+alias aliasconfig="$EDITOR ~/.aliases"
+source ~/.functions
+source ~/.customenv
 
-# Autocompletion: line # -- what it enables
-# # 0 -- vanilla completion (abc => abc)
-# # 1 -- smart case completion (abc => Abc)
-# # 2 -- word flex completion (abc => A-big-Car)
-# # 3 -- full flex completion (abc => ABraCadabra)
+# 0 -- vanilla completion (abc => abc)
+# 1 -- smart case completion (abc => Abc)
+# 2 -- word flex completion (abc => A-big-Car)
+# 3 -- full flex completion (abc => ABraCadabra)
 zstyle ':completion:*' matcher-list '' \
-   'm:{a-z\-}={A-Z\_}' \
-     'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-       'r:|?=** m:{a-z\-}={A-Z\_}'
+  'm:{a-z\-}={A-Z\_}' \
+  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+  'r:|?=** m:{a-z\-}={A-Z\_}'
 
-{ archey -b; fortune -s; } | lolcat -a -d 1 -s 50 -t
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
+fpath=(~/.zsh $fpath)
+fpath+=~/.zfunc
 
+# Turn off mouse acceleration.
+defaults write .GlobalPreferences com.apple.mouse.scaling -1
+
+# Turn off font smoothing.
+defaults -currentHost write -g AppleFontSmoothing -int 0
+
+# Show hidden folders by default.
+defaults write com.apple.Finder AppleShowAllFiles true
+
+export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# eval "$(rbenv init - zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export GUILE_LOAD_PATH="/usr/local/share/guile/site/3.0"
+export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/3.0/site-ccache"
+export GUILE_SYSTEM_EXTENSIONS_PATH="/usr/local/lib/guile/3.0/extensions"
+
+# { archey -b -o; fortune -s; } | lolcat -d 1 -s 50 -t
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
