@@ -1,0 +1,101 @@
+"=============================================================================
+" vimrc --- Entry file for vim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+" Note: Skip initialization for vim-tiny or vim-small.
+if 1
+    let g:_spacevim_if_lua = 0
+    if has('lua')
+        if has('win16') || has('win32') || has('win64')
+            let s:plugin_dir = fnamemodify(expand('<sfile>'), ':h').'\lua'
+            let s:str = s:plugin_dir . '\?.lua;' . s:plugin_dir . '\?\init.lua;'
+        else
+            let s:plugin_dir = fnamemodify(expand('<sfile>'), ':h').'/lua'
+            let s:str = s:plugin_dir . '/?.lua;' . s:plugin_dir . '/?/init.lua;'
+        endif
+        silent! lua package.path=vim.eval("s:str") .. package.path
+        if empty(v:errmsg)
+            let g:_spacevim_if_lua = 1
+        endif
+    endif
+    execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
+endif
+" vim:set et sw=2
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set nocompatible
+set autoindent
+set backup
+set nu
+set showmatch
+syntax on
+set t_Co=256
+filetype on
+filetype indent on
+filetype plugin on
+set modeline
+set wildmenu
+set lazyredraw
+set ls=2
+
+set incsearch
+set hlsearch
+nnoremap <leader><space> :nohlsearch<CR>
+
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+"nnoremap <space> za
+set foldmethod=indent
+
+nnoremap B ^
+nnoremap E $
+
+nnoremap $ <nop>
+nnoremap ^ <nop>
+
+nnoremap j gj
+nnoremap k gk
+
+inoremap jk <esc>
+nnoremap <leader>s :mksession<CR>
+
+nnoremap gV `[v`]
+
+let mapleader=","
+
+nnoremap <leader>a :Ag
+
+colorscheme badwolf
+let g:badwolf_tabline=0
+let g:badwolf_darkgutter=1
+set cursorline
+
+" When editing `RubyPlayground.rb`, execute it on save.
+autocmd BufWritePost RubyPlayground.rb !ruby %
+
+" When editing `PythonPlayground.py`, execute it on save.
+autocmd BufWritePost PythonPlayground.py !python3 %
+
+" When editing `PythonPlayground.py`, execute it on save.
+autocmd BufWritePost KotlinPlayground.kts !kotlinc %
+
+" Use Ruby syntax highlight on Fastfile, Podfile, and podspecs.
+autocmd BufReadPost Fastfile,Podfile,*.podspec set syntax=ruby
+
+" Use Swift syntax highlight on .swift files.
+autocmd BufReadPost *.swift set syntax=swift
+
+" Make all Haskell files playgrounds.
+autocmd BufWritePost *.hs !ghc % && ./%:r
+
+" Don't select line numbers when copying.
+""set mouse+=r
+

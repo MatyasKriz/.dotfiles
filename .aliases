@@ -5,7 +5,7 @@ alias week='date +%V'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias locip="ipconfig getifaddr en0"
+alias locip="ipconfig getifaddr en0; ipconfig getifaddr en1"
 
 # Clean up LaunchServices to remove duplicates in the “Open With” menu
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
@@ -22,15 +22,30 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1"
 
+alias xcode="open -a Xcode"
+alias finder="open ."
 
+alias pi="(if [ -f './Gemfile' ]; then bundle exec pod install; else pod install; fi); tput bel"
 
+# Launch Quake III
+alias quake="/Applications/ioquake3.app/Contents/MacOS/ioquake3 +set r_fullscreen '0' +set r_customaspect '1' +set r_customwidth '1920' +set r_customheight '1000' +set r_mode '-1'"
 
+# Notify. Usually used like `long-running-task; ntf` to show a notification after the task is done.
+alias ntf="tput bel"
 
+# Rebases TODO, isn't escaped
+#alias finish_pr="git rev-parse origin/master | git branch --contains | egrep -v \"(^\\*|master|dev)\" | xargs git push origin --force && git rebase --onto `git symbolic-ref --short HEAD` --root master && git push master origin"
 
+alias weather="curl wttr.in/Brno"
 
+# JSON curl
+alias jurl='curl -sLH "Content-Type: application/json"'
 
+# Pretify JSON in clipboard.
+alias jsonify='jq .'
+alias pjson='pbpaste | jsonify'
 
+alias tu='tuist'
 
-
-
+alias git discard='git checkout --'
 

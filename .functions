@@ -21,3 +21,79 @@ if [ $? -eq 0 ]; then
 		git diff --no-index --color-words "$@";
 	}
 fi;
+
+# make a directory and cd into it
+function mkcdir() {
+    mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}
+
+# link iPhone version from matching Xcode to the current Xcode (Xcode.app)
+function getis() {
+	if [ "$#" -ne 1 ]; then
+    	echo "Illegal number of parameters, just input the iOS version you seek."
+		return
+	fi
+	sudo ln -s /Applications/Xcode*.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport/"$1"* /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport/"$1"
+}
+
+# wrapper for easy extraction of compressed files
+function extract() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.xz)    tar xvJf $1    ;;
+            *.tar.bz2)   tar xvjf $1    ;;
+            *.tar.gz)    tar xvzf $1    ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xvf $1     ;;
+            *.tbz2)      tar xvjf $1    ;;
+            *.tgz)       tar xvzf $1    ;;
+            *.apk)       unzip $1       ;;
+            *.epub)      unzip $1       ;;
+            *.xpi)       unzip $1       ;;
+            *.zip)       unzip $1       ;;
+            *.war)       unzip $1       ;;
+            *.jar)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)           echo "No way to extract '$1'." ;;
+        esac
+    else
+        echo "'$1' is not a valid file."
+    fi
+}
+
+# Just runs the command while ignoring EVERYTHING.
+function shut() {
+    eval "$@ > /dev/null 2>&1"
+    tput bel
+}
+
+function bundleconfig() {
+    function runvim() {
+        vim -c "autocmd BufWritePost Gemfile !bundle install" ./Gemfile
+    }
+
+    if [ -f ./Gemfile ]; then
+        runvim
+    else
+        bundle init && runvim
+    fi
+}
+
+function displays() {
+    displayplacer "id:A48D80DE-C7D1-0CDA-AD44-DDA67F36DD2F res:2560x1440 hz:60 color_depth:8 scaling:off origin:(0,0) degree:0" "id:786E572B-BF7A-049F-744C-679D49748EB3 res:1440x2560 hz:59 color_depth:8 scaling:off origin:(-1440,-536) degree:90" "id:BBACAACD-902B-AA11-651F-73E8A2BDB206 res:2560x1440 hz:59 color_depth:8 scaling:off origin:(2560,0) degree:0"
+}
+
+function lazygit() {
+    git add .
+    git commit -a -m "$1"
+    git push
+}
+
+function status_bar() {
+    ( set -x; xcrun simctl status_bar "$1" override --time 9:41 --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100 )
+}
+
